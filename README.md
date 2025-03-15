@@ -15,7 +15,7 @@ SOUP.ai è un chatbot avanzato che utilizza le API di DeepSeek per fornire rispo
 ## 📦 Installazione
 1. **Clona il repository**
    ```bash
-   git clone https://github.com/tuo-username/SOUP.ai.git
+   git clone https://github.com/SoUp6565/SOUP.ai.git
    cd SOUP.ai
    ```
 2. **Installa le dipendenze**
