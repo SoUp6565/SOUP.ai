@@ -27,8 +27,13 @@ Assicurati di avere **Python 3.13** installato, poi esegui:
 pip install -r requirements.txt
 ```
 
-### 3️⃣ Modifica la chiave API
-Il chatbot utilizza le API di DeepSeek tramite OpenRouter. Nel file `app.py`, sostituisci la chiave API presente con la tua chiave personale.
+### 3️⃣ Configura il file .env
+Il chatbot utilizza le API di DeepSeek tramite OpenRouter. Per mantenere sicura la tua chiave API, crea un file `.env` nella cartella principale del progetto e aggiungi la tua chiave API:
+```ini
+DEEPSEEK_API_KEY=la_tua_chiave_api
+```
+
+**Importante:** Assicurati che il file `.env` sia incluso nel `.gitignore` per evitare di caricare la tua chiave API su GitHub.
 
 ### 4️⃣ Avvia il server Flask
 Esegui il comando:
@@ -76,4 +81,3 @@ Questo progetto è distribuito sotto licenza **MIT**.
 ---
 
 Ora sei pronto per usare SOUP.ai! 🚀
-
