@@ -1,11 +1,21 @@
+#v 1.5
 from flask import Flask, render_template, request, jsonify
+from dotenv import load_dotenv
+import os
 import requests
+
+# Carica le variabili d'ambiente
+load_dotenv()
+API_KEY = os.getenv("DEEPSEEK_API_KEY")
+
+# Controllo della chiave API
+if not API_KEY:
+    raise ValueError("⚠️ ERRORE: API Key non trovata! Controlla il file .env e assicurati che DEEPSEEK_API_KEY sia impostata.")
 
 app = Flask(__name__)
 
 # Configura l'API
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
-API_KEY = "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"  # Tieni presente che dovresti proteggerla
 
 @app.route("/")
 def index():
@@ -14,27 +24,27 @@ def index():
 @app.route("/chat", methods=["POST"])
 def chat():
     user_message = request.json.get("message")  # Ottiene il messaggio dell'utente
+    
+    if not user_message:
+        return jsonify({"response": "Errore: Messaggio non valido."}), 400
 
-    # Controlla se la chiave API è disponibile
-    if not API_KEY:
-        return jsonify({"response": "Errore: API Key non configurata"}), 500
-
-    # Prepara l'intestazione e il corpo della richiesta
-    headers = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json"
+    }
     data = {
-        "model": "deepseek/deepseek-chat:free",  # Usa il modello corretto
+        "model": "deepseek/deepseek-chat:free",
         "messages": [{"role": "user", "content": user_message}]
     }
 
-    response = requests.post(API_URL, json=data, headers=headers)
-
-    # Gestione della risposta API (esattamente come il codice funzionante)
-    if response.status_code == 200:
+    try:
+        response = requests.post(API_URL, json=data, headers=headers)
+        response.raise_for_status()  # Solleva un errore se la richiesta fallisce
         response_json = response.json()
-        content = response_json["choices"][0]["message"]["content"]
+        content = response_json.get("choices", [{}])[0].get("message", {}).get("content", "Errore nella risposta dell'IA.")
         return jsonify({"response": content})
-    else:
-        return jsonify({"response": f"Errore nell'API: {response.status_code} - {response.text}"})
+    except requests.exceptions.RequestException as e:
+        return jsonify({"response": f"Errore nella richiesta API: {str(e)}"}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
