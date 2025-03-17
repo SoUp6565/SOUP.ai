@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOUP.ai - Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="chat-container">
+        <h1>SOUP.ai</h1>
+        <div class="chat-box" id="chatBox">
+            <div class="message bot">Ciao! Sono SOUP.ai, come posso aiutarti?</div>
+        </div>
+        <div class="input-container">
+            <input type="text" id="userInput" placeholder="Chiedimi qualcosa..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">Invia</button>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
