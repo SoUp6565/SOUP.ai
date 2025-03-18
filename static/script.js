@@ -1,4 +1,5 @@
-//v 1.5
+// v 1.5
+
 document.addEventListener("DOMContentLoaded", function() {
     const chatBox = document.getElementById("chatBox");
     const userInput = document.getElementById("userInput");
@@ -19,8 +20,8 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .then(response => response.json())
         .then(data => {
-            // Mostra la risposta del bot
-            appendMessage("bot", data.response);
+            // Mostra la risposta del bot con effetto di scrittura progressiva
+            appendMessageTypingEffect("bot", data.response);
         })
         .catch(error => console.error("Errore:", error));
     };
@@ -38,4 +39,23 @@ document.addEventListener("DOMContentLoaded", function() {
         chatBox.appendChild(msgDiv);
         chatBox.scrollTop = chatBox.scrollHeight; // Scorrimento automatico
     }
+
+    // Effetto macchina da scrivere per il messaggio del bot
+    function appendMessageTypingEffect(role, text) {
+        const msgDiv = document.createElement("div");
+        msgDiv.classList.add("message", role);
+        chatBox.appendChild(msgDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        let index = 0;
+        function typeEffect() {
+            if (index < text.length) {
+                msgDiv.textContent += text[index];
+                index++;
+                setTimeout(typeEffect, 250); // Velocità della scrittura
+            }
+        }
+        typeEffect();
+    }
 });
+
