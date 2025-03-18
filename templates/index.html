@@ -8,15 +8,18 @@
 </head>
 <body>
     <div class="chat-container">
-        <h1>SOUP.ai</h1>
+        <div class="header">
+            <span class="logo">SOUP.ai</span>
+        </div>
         <div class="chat-box" id="chatBox">
             <div class="message bot">Ciao! Sono SOUP.ai, come posso aiutarti?</div>
         </div>
         <div class="input-container">
-            <input type="text" id="userInput" placeholder="Chiedimi qualcosa..." onkeypress="handleKeyPress(event)">
-            <button onclick="sendMessage()">Invia</button>
+            <input type="text" id="userInput" placeholder="Scrivi un messaggio..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">➤</button>
         </div>
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
+
